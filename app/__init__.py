@@ -22,8 +22,10 @@ def define_routes(api):
     from .routes.greeting import Greeting
     from .routes.app_settings import AppSettings
     from .routes.product import Product
+    from .routes.user import User
 
     api.add_resource(Product, '/product')
+    api.add_resource(User, '/user')
 
     # Development only
     api.add_resource(AppSettings, '/appsettings')
