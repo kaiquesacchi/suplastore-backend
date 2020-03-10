@@ -32,27 +32,18 @@ class User(Resource):
             "email": result.email,
             "password": result.password,
             "name": result.name,
-            "birthdate": result.birthdate,
-            "cpf": result.cpf,
-            "phone": result.phone,
-            "address": result.address,
             "cart": result.cart,
             "purchases": result.purchases,
-            "profilePic": result.profilePic
         }
 
     def post(self):
         body = request.get_json()
-        if (body is None or any(map(lambda attribute: attribute not in body, ["email", "password", "name", "birthdate", "cpf", "phone", "address"]))):
-            return {'message': "Request must have body with 'email', 'password', 'name', 'birthdate', 'cpf', 'phone', 'address'"}, 400
+        if (body is None or any(map(lambda attribute: attribute not in body, ["email", "password", "name"]))):
+            return {'message': "Request must have body with 'email', 'password' and 'name'"}, 400
         user = ModelUser(
             email=body["email"],
             password=body["password"],
             name=body["name"],
-            birthdate=body["birthdate"],
-            cpf=body["cpf"],
-            phone=body["phone"],
-            address=body["address"]
         )
         db.session.add(user)
         db.session.commit()

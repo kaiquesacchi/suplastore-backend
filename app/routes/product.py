@@ -25,7 +25,8 @@ class Product(Resource):
             "availableQuantity": x.availableQuantity,
             "price": x.price,
             "image": x.image,
-            "type": x.type
+            "type": x.type,
+            "id": x.id
         }, result))}
 
     def post(self):
