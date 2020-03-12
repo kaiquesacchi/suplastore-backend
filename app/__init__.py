@@ -7,8 +7,9 @@ db = SQLAlchemy()
 
 
 def create_app(debug=False):
-    app = Flask(__name__, instance_relative_config=True)
-    app.config.from_pyfile('config.py')
+    app = Flask(__name__)
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../database.db'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     CORS(app)
     db.init_app(app)
