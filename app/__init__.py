@@ -16,7 +16,7 @@ def create_app(debug=False):
     define_routes(api)
 
     # Starts server.
-    app.run(debug=debug)
+    app.run(debug=debug, host='0.0.0.0', port=5000)
 
 
 def define_routes(api):
