@@ -29,11 +29,10 @@ class User(Resource):
         if not result:
             return {'message': 'User not found'}, 404
         return {
+            "id": result.id,
             "email": result.email,
             "password": result.password,
-            "name": result.name,
-            "cart": result.cart,
-            "purchases": result.purchases,
+            "name": result.name
         }
 
     def post(self):
