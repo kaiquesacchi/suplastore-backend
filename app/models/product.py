@@ -9,7 +9,7 @@ class ModelProduct(db.Model):
     price = db.Column(db.Float, nullable=False)
     image = db.Column(db.String, nullable=False)
     type = db.Column(db.String, nullable=False)
-    
+
     def __init__(self, name, description, availableQuantity, price, image, type):
         self.name = name
         self.description = description
@@ -17,6 +17,6 @@ class ModelProduct(db.Model):
         self.price = price
         self.image = image
         self.type = type
-    
+
     def __repr__(self):
         return f'<Product(name:{self.name}, id:{self.id})>'

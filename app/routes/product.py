@@ -10,15 +10,30 @@ class Product(Resource):
         parser.add_argument(
             'id',
             type=str,
-            help='Name of the person receiving the greetings'
+            help="Product's ID"
+        )
+        parser.add_argument(
+            'type',
+            type=str,
+            help="Product's type"
         )
         args = parser.parse_args(strict=True)
 
         if args.id:
             result = ModelProduct.query.filter_by(id=args.id).first()
+            return {
+            "name": result.name,
+            "description": result.description,
+            "availableQuantity": result.availableQuantity,
+            "price": result.price,
+            "image": result.image,
+            "type": result.type,
+            "id": result.id
+        }
+        elif args.type:
+            result = ModelProduct.query.filter_by(type=args.type).all()
         else:
             result = ModelProduct.query.all()
-
         return {'products': list(map(lambda x: {
             "name": x.name,
             "description": x.description,
