@@ -21,7 +21,6 @@ def create_app(debug=False):
 
 
 def define_routes(api):
-    from .routes.greeting import Greeting
     from .routes.app_settings import AppSettings
     from .routes.product import Product
     from .routes.user import User
@@ -30,7 +29,4 @@ def define_routes(api):
     api.add_resource(Product, '/product')
     api.add_resource(User, '/user')
     api.add_resource(Cart, '/cart')
-
-    # Development only
     api.add_resource(AppSettings, '/appsettings')
-    api.add_resource(Greeting, '/greeting')
