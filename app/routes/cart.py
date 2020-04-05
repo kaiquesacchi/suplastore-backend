@@ -2,9 +2,11 @@ from flask import request
 from flask_restful import Resource, reqparse
 from ..models.cart import ModelCart
 from .. import db
+from ..performance.time_measuring import time_function
 
 
 class Cart(Resource):
+    @time_function
     def get(self):
         parser = reqparse.RequestParser()
         parser.add_argument(
@@ -28,6 +30,7 @@ class Cart(Resource):
             "userId": result.userId
         }
 
+    @time_function
     def post(self):
         body = request.get_json()
         if (body is None or any(map(lambda attribute: attribute not in body, ["products", "totalValue", "userId"]))):
