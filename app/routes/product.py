@@ -21,6 +21,16 @@ class Product(Resource):
             type=str,
             help="Product's type"
         )
+        parser.add_argument(
+            'page_number',
+            type=int,
+            help="Pagination's page number"
+        )
+        parser.add_argument(
+            'page_size',
+            type=int,
+            help="Pagination's page size"
+        )
         args = parser.parse_args(strict=True)
 
         if args.id:
@@ -34,10 +44,28 @@ class Product(Resource):
                 "type": result.type,
                 "id": result.id
             }
-        elif args.type:
-            result = ModelProduct.query.filter_by(type=args.type).all()
-        else:
-            result = ModelProduct.query.all()
+
+        result = ModelProduct.query
+
+        if args.type:
+            result = result.filter_by(type=args.type)
+
+        if args.page_number is None or args.page_size is None:
+            result = result.all()
+            return {
+                'products': list(map(lambda x: {
+                    "name": x.name,
+                    "description": x.description,
+                    "availableQuantity": x.availableQuantity,
+                    "price": x.price,
+                    "image": x.image,
+                    "type": x.type,
+                    "id": x.id
+                }, result))
+            }
+
+        result = result.paginate(
+            page=args.page_number, per_page=args.page_size)
         return {
             'products': list(map(lambda x: {
                 "name": x.name,
@@ -47,8 +75,11 @@ class Product(Resource):
                 "image": x.image,
                 "type": x.type,
                 "id": x.id
-            }, result))
+            }, result.items)),
+            'pages': result.pages
         }
+
+        return
 
     @time_function
     def post(self):
